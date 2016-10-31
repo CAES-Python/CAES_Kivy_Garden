@@ -1,0 +1,40 @@
+<Main>
+BoxLayout:
+	BoxLayout:
+		orientation: 'vertical'
+		Light_indicator:
+			id:R
+			color: 'red'
+		Light_indicator:
+			id:G
+			color: 'green'
+		Light_indicator:
+			id:B
+			color: 'blue'
+		Light_indicator:
+			id:P
+			color: 'purple'
+		Light_indicator:
+			id:Y
+			off_color: 'green'
+
+	BoxLayout:
+		orientation: 'vertical'	
+		Button:
+			text: 'R'
+			on_release:R.turn_on_off()
+		Button:
+			text: 'G'
+			on_release:G.turn_on_off()
+
+		Button:
+			text: 'B'
+			on_release:B.turn_on_off()
+		Button:
+			text: 'P'
+			on_release:P.turn_on_off()
+		Button:
+			text: 'Y'
+			on_release:Y.turn_on_off()
+
+
