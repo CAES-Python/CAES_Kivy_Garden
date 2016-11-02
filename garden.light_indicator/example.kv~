@@ -2,40 +2,56 @@
 BoxLayout:
 	BoxLayout:
 		orientation: 'vertical'
-		Light_indicator:
+		Multi_light_indicator:
 			id:R
-			color: 'red'
-		Light_indicator:
+			num:3
+			color1: 'red'
+			bol1: True
+			color2:'yellow'
+			color3:'green'
+		Multi_light_indicator:
 			id:G
-			color: 'green'
-		Light_indicator:
+			num:3
+			color1: 'blue'
+			color2:'green'
+			bol2: True
+			color3:'yellow'
+		Multi_light_indicator:
 			id:B
-			color: 'blue'
-		Light_indicator:
+			num:3
+			color1: 'green'
+			color2:'purple'
+			color3:'red'
+			bol3: True
+		Multi_light_indicator:
 			id:P
-			color: 'purple'
-		Light_indicator:
+			num:2
+			color1: 'green'
+			color2:'red'
+		Multi_light_indicator:
+			num:1
 			id:Y
-			color: 'yellow'
-			off_color: 'green'
+
+			color1: 'green'
+			color2:'yellow'
 
 	BoxLayout:
 		orientation: 'vertical'	
 		Button:
 			text: 'R'
-			on_release:R.turn_on_off()
+			on_release:R.turn_on_off_l2()
 		Button:
 			text: 'G'
-			on_release:G.turn_on_off()
+			on_release:G.turn_on_off_all()
 
 		Button:
 			text: 'B'
-			on_release:B.turn_on_off()
+			on_release:B.turn_on_off_all()
 		Button:
 			text: 'P'
-			on_release:P.turn_on_off()
+			on_release:P.turn_on_off_l2()
 		Button:
 			text: 'Y'
-			on_release:Y.turn_on_off()
+			on_release:Y.turn_on_off_l1()
 
 
