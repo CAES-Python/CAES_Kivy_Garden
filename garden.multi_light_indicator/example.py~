@@ -1,8 +1,0 @@
-#example
-from kivy.base  import  runTouchApp
-from kivy.lang  import  Builder
-from kivy.garden.light_indicator import  Light_indicator
-from kivy.uix.button import Button
-
-# LOAD KV UIX
-runTouchApp(Builder.load_file('example.kv'))
