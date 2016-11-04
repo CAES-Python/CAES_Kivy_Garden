@@ -47,8 +47,11 @@ class Light(Widget):
 	Builder.load_file(mypath + os.sep +"light.kv")	
 	light_color = ListProperty([1,0,0,1])
 	light_size = ListProperty([50,50])
-
-
+	label = StringProperty("")
+	def __init__(self, **kwargs):
+		super(Light_indicator, self).__init__(**kwargs)
+		l=Label(text = self.label, font_size=30, pos= (0,200))
+		self.add_widget(l)
 
 class Light_indicator(Widget):
 	'''
@@ -58,43 +61,91 @@ class Light_indicator(Widget):
 BoxLayout:
 	BoxLayout:
 		orientation: 'vertical'
-		Multi_light_indicator:
+		Light_indicator:
 			id:R
 			num:3
 			color1: 'red'
 			bol1: True
 			color2:'yellow'
 			color3:'green'
-		Multi_light_indicator:
+			setting: False
+			pos_l1: [25,100]
+			pos_l2: [100,100]
+			pos_l3: [175,100]
+		Light_indicator:
 			id:G
 			num:3
 			color1: 'blue'
 			color2:'green'
 			bol2: True
 			color3:'yellow'
-		Multi_light_indicator:
+			pos_l1: [25,100]
+			pos_l2: [100,100]
+			pos_l3: [175,100]
+		Light_indicator:
 			id:B
 			num:3
 			color1: 'green'
-			color2:'yellow'
+			color2:'purple'
 			color3:'red'
 			bol3: True
-		Multi_light_indicator:
+			pos_l1: [25,100]
+			pos_l2: [100,100]
+			pos_l3: [175,100]
+		Light_indicator:
 			id:P
 			num:2
 			color1: 'green'
 			color2:'red'
-		Multi_light_indicator:
+			pos_l1: [50,100]
+			pos_l2: [150,100]
+		Light_indicator:
 			num:1
 			id:Y
 
 			color1: 'green'
 			color2:'yellow'
+
+
+	BoxLayout:
+		orientation: 'vertical'
+		Light_indicator:
+			orientation: 'vertical'
+			size_lights: [50,50]
+			id:Rv
+			num:3
+			color1: 'red'
+			bol1: True
+			color2:'yellow'
+			color3:'green'
+			setting: False
+			pos_l1: [100,175]
+			pos_l2: [100,100]
+			pos_l3: [100,25]
+		Light_indicator:
+			id:Gv
+			orientation: 'vertical'
+			size_lights: [10,10]
+			num:2
+			color1: 'blue'
+			color2:'green'
+			bol2: True
+			bol1: True
+			pos_l1: [120,200]
+			pos_l2: [120,75]
+			
+		Light_indicator:
+			orientation: 'vertical'
+			id:Bv
+			num:1
+			color1: 'green'
+
+
 	BoxLayout:
 		orientation: 'vertical'	
 		Button:
 			text: 'R'
-			on_release:R.turn_on_off_all()
+			on_release:R.turn_on_off_l2()
 		Button:
 			text: 'G'
 			on_release:G.turn_on_off_all()
@@ -108,6 +159,8 @@ BoxLayout:
 		Button:
 			text: 'Y'
 			on_release:Y.turn_on_off_l1()
+
+
 
 
 	'''
@@ -132,6 +185,9 @@ BoxLayout:
 	pos_l1 = ListProperty([100,100])
 	pos_l2 = ListProperty([100,100])
 	pos_l3 = ListProperty([100,100])
+	l1_label = StringProperty("")
+	l2_label = StringProperty("")
+	l3_label = StringProperty("")
 	global _light1 
 	global _light2 
 	global _light3 
@@ -171,6 +227,7 @@ BoxLayout:
 			self._light1 = Light()
 			self._light1.light_size = self.size_lights
 			self._light1.pos = self.pos_l1
+			self._light1.label = self.l1_label
 			self._setting.add_widget(self._light1)
 			#print 'num = ',self.num
 		elif self.num  == 2:
@@ -179,7 +236,9 @@ BoxLayout:
 			self._light1.light_size = self.size_lights
 			self._light2.light_size = self.size_lights
 			self._light1.pos = self.pos_l1
-			self._light2.pos = self.pos_l2			
+			self._light2.pos = self.pos_l2
+			self._light1.label = self.l1_label
+			self._light2.label = self.l2_label			
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
 			#print 'num=',self.num
@@ -193,6 +252,9 @@ BoxLayout:
 			self._light1.pos = self.pos_l1
 			self._light2.pos = self.pos_l2
 			self._light3.pos = self.pos_l3
+			self._light1.label = self.l1_label
+			self._light2.label = self.l2_label
+			self._light3.label = self.l3_label
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
 			self._setting.add_widget(self._light3)

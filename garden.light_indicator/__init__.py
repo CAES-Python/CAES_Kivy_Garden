@@ -47,8 +47,11 @@ class Light(Widget):
 	Builder.load_file(mypath + os.sep +"light.kv")	
 	light_color = ListProperty([1,0,0,1])
 	light_size = ListProperty([50,50])
-
-
+	label = StringProperty("")
+	def __init__(self, **kwargs):
+		super(Light, self).__init__(**kwargs)
+		l=Label(text = self.label, font_size=30, pos= (0,200))
+		self.add_widget(l)
 
 class Light_indicator(Widget):
 	'''
@@ -182,6 +185,9 @@ BoxLayout:
 	pos_l1 = ListProperty([100,100])
 	pos_l2 = ListProperty([100,100])
 	pos_l3 = ListProperty([100,100])
+	l1_label = StringProperty("")
+	l2_label = StringProperty("")
+	l3_label = StringProperty("")
 	global _light1 
 	global _light2 
 	global _light3 
@@ -221,6 +227,7 @@ BoxLayout:
 			self._light1 = Light()
 			self._light1.light_size = self.size_lights
 			self._light1.pos = self.pos_l1
+			self._light1.label = self.l1_label
 			self._setting.add_widget(self._light1)
 			#print 'num = ',self.num
 		elif self.num  == 2:
@@ -229,7 +236,9 @@ BoxLayout:
 			self._light1.light_size = self.size_lights
 			self._light2.light_size = self.size_lights
 			self._light1.pos = self.pos_l1
-			self._light2.pos = self.pos_l2			
+			self._light2.pos = self.pos_l2
+			self._light1.label = self.l1_label
+			self._light2.label = self.l2_label			
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
 			#print 'num=',self.num
@@ -243,6 +252,9 @@ BoxLayout:
 			self._light1.pos = self.pos_l1
 			self._light2.pos = self.pos_l2
 			self._light3.pos = self.pos_l3
+			self._light1.label = self.l1_label
+			self._light2.label = self.l2_label
+			self._light3.label = self.l3_label
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
 			self._setting.add_widget(self._light3)
