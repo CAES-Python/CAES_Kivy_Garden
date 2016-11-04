@@ -58,43 +58,91 @@ class Light_indicator(Widget):
 BoxLayout:
 	BoxLayout:
 		orientation: 'vertical'
-		Multi_light_indicator:
+		Light_indicator:
 			id:R
 			num:3
 			color1: 'red'
 			bol1: True
 			color2:'yellow'
 			color3:'green'
-		Multi_light_indicator:
+			setting: False
+			pos_l1: [25,100]
+			pos_l2: [100,100]
+			pos_l3: [175,100]
+		Light_indicator:
 			id:G
 			num:3
 			color1: 'blue'
 			color2:'green'
 			bol2: True
 			color3:'yellow'
-		Multi_light_indicator:
+			pos_l1: [25,100]
+			pos_l2: [100,100]
+			pos_l3: [175,100]
+		Light_indicator:
 			id:B
 			num:3
 			color1: 'green'
-			color2:'yellow'
+			color2:'purple'
 			color3:'red'
 			bol3: True
-		Multi_light_indicator:
+			pos_l1: [25,100]
+			pos_l2: [100,100]
+			pos_l3: [175,100]
+		Light_indicator:
 			id:P
 			num:2
 			color1: 'green'
 			color2:'red'
-		Multi_light_indicator:
+			pos_l1: [50,100]
+			pos_l2: [150,100]
+		Light_indicator:
 			num:1
 			id:Y
 
 			color1: 'green'
 			color2:'yellow'
+
+
+	BoxLayout:
+		orientation: 'vertical'
+		Light_indicator:
+			orientation: 'vertical'
+			size_lights: [50,50]
+			id:Rv
+			num:3
+			color1: 'red'
+			bol1: True
+			color2:'yellow'
+			color3:'green'
+			setting: False
+			pos_l1: [100,175]
+			pos_l2: [100,100]
+			pos_l3: [100,25]
+		Light_indicator:
+			id:Gv
+			orientation: 'vertical'
+			size_lights: [10,10]
+			num:2
+			color1: 'blue'
+			color2:'green'
+			bol2: True
+			bol1: True
+			pos_l1: [120,200]
+			pos_l2: [120,75]
+			
+		Light_indicator:
+			orientation: 'vertical'
+			id:Bv
+			num:1
+			color1: 'green'
+
+
 	BoxLayout:
 		orientation: 'vertical'	
 		Button:
 			text: 'R'
-			on_release:R.turn_on_off_all()
+			on_release:R.turn_on_off_l2()
 		Button:
 			text: 'G'
 			on_release:G.turn_on_off_all()
@@ -110,10 +158,13 @@ BoxLayout:
 			on_release:Y.turn_on_off_l1()
 
 
+
+
 	'''
 	dummy = DummyClass
 	mypath = os.path.dirname(os.path.abspath(inspect.getsourcefile(dummy)))
 	file_setting = StringProperty(mypath + os.sep + "setting.png")
+	file_setting_v = StringProperty(mypath + os.sep + "setting_v.png")
 	size_setting = BoundedNumericProperty(256, min=128, max=256, errorvalue=128)
 	num = NumericProperty(1)
 	color_dictionary = {'red':[1,0,0,1], 'green':[0,1,0,1], 'blue':[0,0,1,1], 'yellow':[1,1,0,1], 'grey':[0.5,0.5,0.5,1]}# dictionary that calls a color and returns a RGBa list.
@@ -125,6 +176,12 @@ BoxLayout:
 	color2 = StringProperty("yellow") # name of color to refrence the dictionary. Defaults to yellow.
 	color3 = StringProperty("yellow") # name of color to refrence the dictionary. Defaults to yellow.
 	off_color = StringProperty("grey")# name of the off_color to refrence the dictionary. Defaults to grey.
+	orientation = StringProperty("horizontal") # orientation of the lights. Options are "horizontal" or "vertical".
+	size_lights = ListProperty([50,50]) # size of the lights.
+	setting = BooleanProperty(True) # Boolean for having a setting image or not.
+	pos_l1 = ListProperty([100,100])
+	pos_l2 = ListProperty([100,100])
+	pos_l3 = ListProperty([100,100])
 	global _light1 
 	global _light2 
 	global _light3 
@@ -132,9 +189,9 @@ BoxLayout:
 
 	def __init__(self, **kwargs):
 		super(Light_indicator, self).__init__(**kwargs)
-		Clock.schedule_once(self._finish_init_)
-		Clock.schedule_once(self._finish_init_)
-		Clock.schedule_once(self._finish_init_)
+
+		Clock.schedule_once(self._finish_init_, 0.5)
+		#Clock.schedule_once(self._finish_init_, 0.5)
 		Clock.schedule_interval(self.my_schedule, 0.1)
 		
 
@@ -145,22 +202,34 @@ BoxLayout:
 			do_scale=True,
 			do_translation=False
 			)
-		_img_setting = Image(source=self.file_setting, size=(self.size_setting, 
-			self.size_setting))
-		self._setting.add_widget(_img_setting)
-		
-
-		if self.num  == 1:
+		if self.setting == True:
+			if self.orientation == 'horizontal':
+				_img_setting = Image(source=self.file_setting, size=(self.size_setting, 
+					self.size_setting))
+				self._setting.add_widget(_img_setting)
+			elif self.orientation == 'vertical':
+				_img_setting = Image(source=self.file_setting_v,  size=(self.size_setting, 
+					self.size_setting))
+				self._setting.add_widget(_img_setting)
+			else:
+				raise "Invalid orientation", self.orientation
 			
+		
+		
+		if self.num  == 1:
+	
 			self._light1 = Light()
-			self._light1.pos = (100 ,100)
+			self._light1.light_size = self.size_lights
+			self._light1.pos = self.pos_l1
 			self._setting.add_widget(self._light1)
 			#print 'num = ',self.num
 		elif self.num  == 2:
 			self._light1 = Light()
 			self._light2 = Light()
-			self._light1.pos = (50,100)
-			self._light2.pos = (150,100)			
+			self._light1.light_size = self.size_lights
+			self._light2.light_size = self.size_lights
+			self._light1.pos = self.pos_l1
+			self._light2.pos = self.pos_l2			
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
 			#print 'num=',self.num
@@ -168,9 +237,12 @@ BoxLayout:
 			self._light1 = Light()
 			self._light2 = Light()
 			self._light3 = Light()
-			self._light1.pos = (25 ,100)
-			self._light2.pos = (100,100)
-			self._light3.pos = (175,100)
+			self._light1.light_size = self.size_lights
+			self._light2.light_size = self.size_lights
+			self._light3.light_size = self.size_lights
+			self._light1.pos = self.pos_l1
+			self._light2.pos = self.pos_l2
+			self._light3.pos = self.pos_l3
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
 			self._setting.add_widget(self._light3)
@@ -181,12 +253,13 @@ BoxLayout:
 			print 'ERROR: The number of lights('+str(self.num)+ ') is not valid. Must be 1,2, or 3 lights.'
 			print'#'*90
 			sys.exit()
-
-		self.add_widget(self._setting)
 		
+
+		#self.add_widget(self._setting)
+		#self._setting.pos = self.pos
 		self.bind(pos=self._update)
 		self.bind(size=self._update)
-		
+		self.add_widget(self._setting)
 		
 
 	def _update(self, *args):
@@ -196,22 +269,23 @@ BoxLayout:
 		
 			
 		if self.num  == 1:
-			
-			self._light1.pos = (100 ,100)
-						
+		
+			self._light1.pos = self.pos_l1
+					
 		elif self.num  == 2:
 
-			self._light1.pos = (50,100)
-			self._light2.pos = (150,100)
+			self._light1.pos = self.pos_l1
+			self._light2.pos = self.pos_l2
 
 		elif self.num  == 3:
-			
-			self._light1.pos = (25 ,100)
-			self._light2.pos = (100,100)
-			self._light3.pos = (175,100)
+		
+			self._light1.pos = self.pos_l1
+			self._light2.pos = self.pos_l2
+			self._light3.pos = self.pos_l3
 		else:
 			print 'the number of lights is not valid.'
 			sys.exit()
+	
 #self.get_color()
 		
 	def get_color_l1(self):
@@ -292,10 +366,10 @@ BoxLayout:
 		self.get_color_l2() 
 
 	def turn_on_off_l3(self):
-		if self.bol3 == False :
+		if self.bol3 == False:
 			self.bol3 = True
 			
-		else:
+		elif self.bol3 == True:
 			self.bol3 = False
 		self.get_color_l3() 
 
@@ -327,6 +401,15 @@ BoxLayout:
 		if self.bol3 == False :
 			self.bol3 = True
 		self.get_color_l3()
+
+	def turn_on_all(self):
+		if self.bol3 == False or self.bol2 == False or self.bol1 == False  :
+			self.bol3 = True
+			self.bol2 = True
+			self.bol1 = True
+		self.get_color_l3()
+		self.get_color_l2()
+		self.get_color_l1()
 ########################################################### Turn off ##############################################################
 	def turn_off_l1(self):
 		if self.bol1 == True :
@@ -341,6 +424,15 @@ BoxLayout:
 	def turn_off_l3(self):
 		if self.bol3 == True :
 			self.bol3 = False
+		self.get_color_l3() 
+
+	def turn_off_all(self):
+		if self.bol3 == True or self.bol2 == True or self.bol1 == True:
+			self.bol1 = False
+			self.bol2 = False
+			self.bol3 = False
+		self.get_color_l1()
+		self.get_color_l2()
 		self.get_color_l3() 
 ################################################################# Schedule ######################################################
 	def my_schedule(self,dt):
