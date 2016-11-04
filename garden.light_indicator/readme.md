@@ -1,1 +1,107 @@
 A simple light indicator. Can use 1,2 or 3 lights.
+Kivy example
+
+	Light_indicator class
+	A basic Kivy example:
+<Main>
+BoxLayout:
+	BoxLayout:
+		orientation: 'vertical'
+		Light_indicator:
+			id:R
+			num:3
+			color1: 'red'
+			bol1: True
+			color2:'yellow'
+			color3:'green'
+			setting: False
+			pos_l1: [25,100]
+			pos_l2: [100,100]
+			pos_l3: [175,100]
+		Light_indicator:
+			id:G
+			num:3
+			color1: 'blue'
+			color2:'green'
+			bol2: True
+			color3:'yellow'
+			pos_l1: [25,100]
+			pos_l2: [100,100]
+			pos_l3: [175,100]
+		Light_indicator:
+			id:B
+			num:3
+			color1: 'green'
+			color2:'purple'
+			color3:'red'
+			bol3: True
+			pos_l1: [25,100]
+			pos_l2: [100,100]
+			pos_l3: [175,100]
+		Light_indicator:
+			id:P
+			num:2
+			color1: 'green'
+			color2:'red'
+			pos_l1: [50,100]
+			pos_l2: [150,100]
+		Light_indicator:
+			num:1
+			id:Y
+
+			color1: 'green'
+			color2:'yellow'
+
+
+	BoxLayout:
+		orientation: 'vertical'
+		Light_indicator:
+			orientation: 'vertical'
+			size_lights: [50,50]
+			id:Rv
+			num:3
+			color1: 'red'
+			bol1: True
+			color2:'yellow'
+			color3:'green'
+			setting: False
+			pos_l1: [100,175]
+			pos_l2: [100,100]
+			pos_l3: [100,25]
+		Light_indicator:
+			id:Gv
+			orientation: 'vertical'
+			size_lights: [10,10]
+			num:2
+			color1: 'blue'
+			color2:'green'
+			bol2: True
+			bol1: True
+			pos_l1: [120,200]
+			pos_l2: [120,75]
+			
+		Light_indicator:
+			orientation: 'vertical'
+			id:Bv
+			num:1
+			color1: 'green'
+
+
+	BoxLayout:
+		orientation: 'vertical'	
+		Button:
+			text: 'R'
+			on_release:R.turn_on_off_l2()
+		Button:
+			text: 'G'
+			on_release:G.turn_on_off_all()
+
+		Button:
+			text: 'B'
+			on_release:B.turn_on_off_all()
+		Button:
+			text: 'P'
+			on_release:P.turn_on_off_l2()
+		Button:
+			text: 'Y'
+			on_release:Y.turn_on_off_l1()
