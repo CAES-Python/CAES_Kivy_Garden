@@ -7,6 +7,4 @@
 			Ellipse:
 				size: root.light_size
 				pos: self.pos
-		Label:
-			text:root.label
-			font_size:30
+
