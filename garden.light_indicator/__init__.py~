@@ -167,7 +167,7 @@ BoxLayout:
 	file_setting_v = StringProperty(mypath + os.sep + "setting_v.png")
 	size_setting = BoundedNumericProperty(256, min=128, max=256, errorvalue=128)
 	num = NumericProperty(1)
-	color_dictionary = {'red':[1,0,0,1], 'green':[0,1,0,1], 'blue':[0,0,1,1], 'yellow':[1,1,0,1], 'grey':[0.5,0.5,0.5,1]}# dictionary that calls a color and returns a RGBa list.
+	color_dictionary = {'red':[1,0,0,1], 'green':[0,1,0,1], 'blue':[0,0,1,1], 'yellow':[1,1,0,1], 'grey':[0.5,0.5,0.5,1],'white':[1,1,1,1], 'black':[0,0,0,1]}# dictionary that calls a color and returns a RGBa list.
       
 	bol1 = BooleanProperty(False) # The boolean that turns on and off the 1st light. Use the BooleanProperty if you what control in the kivy file.
 	bol2 = BooleanProperty(False) # The boolean that turns on and off the 2nd light. Use the BooleanProperty if you what control in the kivy file.
@@ -187,6 +187,7 @@ BoxLayout:
 	l2_label = StringProperty("")
 	l3_label = StringProperty("")
 	text_size = NumericProperty(20)
+	text_color =  StringProperty("white")
 	global _light1 
 	global _light2 
 	global _light3 
@@ -223,7 +224,15 @@ BoxLayout:
 			else:
 				raise "Invalid orientation", self.orientation
 			
-		
+		if label_on ==True:
+			try:
+				text_color_rgba = self.color_dictionary[self.text_color]
+
+			except:
+				print'#'*90
+				print 'ERROR: ' +self.text_color +' doesn\'t exist in the color dictionary. Add it to the __init__.py file to use that color.  '
+				print'#'*90
+				sys.exit()		
 		
 		if self.num  == 1:
 	
@@ -232,7 +241,7 @@ BoxLayout:
 			self._light1.pos = self.pos_l1
 			self._setting.add_widget(self._light1)
 			if self.label_on ==True:
-				self._label1= Label(text=self.l1_label, font_size = self.text_size)
+				self._label1= Label(text=self.l1_label, font_size = self.text_size, color = text_color_rgba)
 				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
 				self._setting.add_widget(self._label1)
 			#print 'num = ',self.num
@@ -246,8 +255,8 @@ BoxLayout:
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
 			if self.label_on ==True:
-				self._label1= Label( text=self.l1_label, font_size = self.text_size)
-				self._label2= Label( text=self.l2_label, font_size = self.text_size)
+				self._label1= Label( text=self.l1_label, font_size = self.text_size, color = text_color_rgba)
+				self._label2= Label( text=self.l2_label, font_size = self.text_size, color = text_color_rgba)
 				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
 				self._label2.pos = (self.label2_pos()[0], self.label2_pos()[1])	
 				self._setting.add_widget(self._label1)
@@ -267,9 +276,9 @@ BoxLayout:
 			self._setting.add_widget(self._light2)
 			self._setting.add_widget(self._light3)
 			if self.label_on ==True:
-				self._label1= Label( text=self.l1_label, font_size = self.text_size )
-				self._label2= Label( text=self.l2_label, font_size = self.text_size )
-				self._label3= Label( text=self.l3_label, font_size = self.text_size )
+				self._label1= Label( text=self.l1_label, font_size = self.text_size, color = text_color_rgba )
+				self._label2= Label( text=self.l2_label, font_size = self.text_size, color = text_color_rgba )
+				self._label3= Label( text=self.l3_label, font_size = self.text_size, color = text_color_rgba )
 				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
 				self._label2.pos = (self.label2_pos()[0], self.label2_pos()[1])	
 				self._label3.pos = (self.label3_pos()[0], self.label3_pos()[1])	
@@ -425,7 +434,7 @@ BoxLayout:
 	def turn_on_off_l3(self):
 		if self.bol3 == False:
 			self.turn_on_l3()#self.bol3 = True	
-			print "L3 on"	
+			#print "L3 on"	
 		else:
 			self.turn_off_l3()
 			#print "L3 off"

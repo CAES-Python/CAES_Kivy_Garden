@@ -60,6 +60,9 @@ BoxLayout:
 
 			color1: 'green'
 			color2:'yellow'
+			label_on: True
+			text_size: 20
+			l1_label: "On"
 
 
 	BoxLayout:
