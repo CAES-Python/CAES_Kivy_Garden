@@ -17,7 +17,7 @@ The :class:`Light_indicator` widget is a widget for displaying Light_indicator.
 __all__ = ('Multi_light_indicator',)
 
 __title__ = 'garden.multi_light_indicator'
-__version__ = '0.1'
+__version__ = '1.2'
 __author__ = 'Marcus Holden'
 # shoutout to julien@hautefeuille.eu and the creator of the kivy garden knobs, whose __init__.py code helped me develop this file.
 import kivy
@@ -29,6 +29,7 @@ from kivy.lang  import  Builder
 
 from kivy.properties    import   StringProperty, BooleanProperty, ReferenceListProperty, ListProperty, StringProperty, BoundedNumericProperty, NumericProperty
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.widget import Widget
 from kivy.uix.scatter import Scatter
 from kivy.uix.image import Image
@@ -37,6 +38,7 @@ from kivy.graphics.vertex_instructions import Ellipse, Rectangle
 from kivy.graphics.context_instructions import Color
 from functools import partial
 import os,inspect,sys
+import time
 
 class DummyClass: 
 	pass
@@ -49,8 +51,7 @@ class Light(Widget):
 	light_size = ListProperty([50,50])
 
 
-
-class Light_indicator(Widget):
+class Light_indicator2(Widget):#Light_indicator2(RelativeLayout):
 	'''
 	Light_indicator class
 	A basic Kivy example:
@@ -69,39 +70,7 @@ BoxLayout:
 			pos_l1: [25,100]
 			pos_l2: [100,100]
 			pos_l3: [175,100]
-		Light_indicator:
-			id:G
-			num:3
-			color1: 'blue'
-			color2:'green'
-			bol2: True
-			color3:'yellow'
-			pos_l1: [25,100]
-			pos_l2: [100,100]
-			pos_l3: [175,100]
-		Light_indicator:
-			id:B
-			num:3
-			color1: 'green'
-			color2:'purple'
-			color3:'red'
-			bol3: True
-			pos_l1: [25,100]
-			pos_l2: [100,100]
-			pos_l3: [175,100]
-		Light_indicator:
-			id:P
-			num:2
-			color1: 'green'
-			color2:'red'
-			pos_l1: [50,100]
-			pos_l2: [150,100]
-		Light_indicator:
-			num:1
-			id:Y
 
-			color1: 'green'
-			color2:'yellow'
 
 
 	BoxLayout:
@@ -119,49 +88,15 @@ BoxLayout:
 			pos_l1: [100,175]
 			pos_l2: [100,100]
 			pos_l3: [100,25]
-		Light_indicator:
-			id:Gv
-			orientation: 'vertical'
-			size_lights: [10,10]
-			num:2
-			color1: 'blue'
-			color2:'green'
-			bol2: True
-			bol1: True
-			pos_l1: [120,200]
-			pos_l2: [120,75]
-			
-		Light_indicator:
-			orientation: 'vertical'
-			id:Bv
-			num:1
-			color1: 'green'
 
-
-	BoxLayout:
-		orientation: 'vertical'	
-		Button:
-			text: 'R'
-			on_release:R.turn_on_off_l2()
-		Button:
-			text: 'G'
-			on_release:G.turn_on_off_all()
-
-		Button:
-			text: 'B'
-			on_release:B.turn_on_off_all()
-		Button:
-			text: 'P'
-			on_release:P.turn_on_off_l2()
-		Button:
-			text: 'Y'
-			on_release:Y.turn_on_off_l1()
 
 
 
 
 	'''
 	dummy = DummyClass
+
+
 	mypath = os.path.dirname(os.path.abspath(inspect.getsourcefile(dummy)))
 	file_setting = StringProperty(mypath + os.sep + "setting.png")
 	file_setting_v = StringProperty(mypath + os.sep + "setting_v.png")
@@ -182,28 +117,30 @@ BoxLayout:
 	pos_l1 = ListProperty([100,100])
 	pos_l2 = ListProperty([100,100])
 	pos_l3 = ListProperty([100,100])
-	label_on = BooleanProperty(False)
-	l1_label = StringProperty("")
-	l2_label = StringProperty("")
-	l3_label = StringProperty("")
-	text_size = NumericProperty(20)
+#	label_on = BooleanProperty(False)
+#	l1_label = StringProperty("")
+#	l2_label = StringProperty("")
+#	l3_label = StringProperty("")
+#	text_size = NumericProperty(30)
 	global _light1 
 	global _light2 
 	global _light3 
-	global _label1 
-	global _label2 
-	global _label3 
-
+#	global _label1 
+#	global _label2 
+#	global _label3 
 	
 
 	def __init__(self, **kwargs):
-		super(Light_indicator, self).__init__(**kwargs)
-
+		super(Light_indicator2, self).__init__(**kwargs)
+		#print 'num before init = ', self.num
 		Clock.schedule_once(self._finish_init_, 0.5)
-		#Clock.schedule_once(self._finish_init_, 0.5)
-		Clock.schedule_interval(self.my_schedule, 0.1)
+#		time.sleep(0.5)
+		#print 'num after init = ', self.num
+		#Clock.schedule_once(self._finish_init_2,0.5)
 		
-
+		Clock.schedule_interval(self.my_schedule, 0.1)
+		#print 'num after Clock = ', self.num
+		
 	def _finish_init_(self,dt):
 		self._setting = Scatter(
 			size=(self.size_setting, self.size_setting),
@@ -231,10 +168,10 @@ BoxLayout:
 			self._light1.light_size = self.size_lights
 			self._light1.pos = self.pos_l1
 			self._setting.add_widget(self._light1)
-			if self.label_on ==True:
-				self._label1= Label(text=self.l1_label, font_size = self.text_size)
-				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
-				self._setting.add_widget(self._label1)
+#			if self.label_on ==True:
+#				self._label1= Label(text=self.l1_label, font_size = self.text_size)
+#				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
+#				self._setting.add_widget(self._label1)
 			#print 'num = ',self.num
 		elif self.num  == 2:
 			self._light1 = Light()
@@ -245,13 +182,14 @@ BoxLayout:
 			self._light2.pos = self.pos_l2			
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
-			if self.label_on ==True:
-				self._label1= Label( text=self.l1_label, font_size = self.text_size)
-				self._label2= Label( text=self.l2_label, font_size = self.text_size)
-				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
-				self._label2.pos = (self.label2_pos()[0], self.label2_pos()[1])	
-				self._setting.add_widget(self._label1)
-				self._setting.add_widget(self._label2)
+#			if self.label_on ==True:
+
+#				self._label1= Label( text=self.l1_label, font_size = self.text_size)
+#				self._label2= Label( text=self.l2_label, font_size = self.text_size)
+#				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
+#				self._label2.pos = (self.label2_pos()[0], self.label2_pos()[1])	
+#				self._setting.add_widget(self._label1)
+#				self._setting.add_widget(self._label2)
 			#print 'num=',self.num
 		elif self.num  == 3:
 			self._light1 = Light()
@@ -266,16 +204,17 @@ BoxLayout:
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
 			self._setting.add_widget(self._light3)
-			if self.label_on ==True:
-				self._label1= Label( text=self.l1_label, font_size = self.text_size )
-				self._label2= Label( text=self.l2_label, font_size = self.text_size )
-				self._label3= Label( text=self.l3_label, font_size = self.text_size )
-				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
-				self._label2.pos = (self.label2_pos()[0], self.label2_pos()[1])	
-				self._label3.pos = (self.label3_pos()[0], self.label3_pos()[1])	
-				self._setting.add_widget(self._label1)
-				self._setting.add_widget(self._label2)
-				self._setting.add_widget(self._label3)
+#			if self.label_on ==True:
+#
+#				self._label1= Label( text=self.l1_label, font_size = self.text_size )
+#				self._label2= Label( text=self.l2_label, font_size = self.text_size )
+#				self._label3= Label( text=self.l3_label, font_size = self.text_size )
+#				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
+#				self._label2.pos = (self.label2_pos()[0], self.label2_pos()[1])	
+#				self._label3.pos = (self.label3_pos()[0], self.label3_pos()[1])	
+#				self._setting.add_widget(self._label1)
+#				self._setting.add_widget(self._label2)
+#				self._setting.add_widget(self._label3)
 			#print 'num =',self.num
 		else:
 
@@ -301,30 +240,48 @@ BoxLayout:
 		if self.num  == 1:
 		
 			self._light1.pos = self.pos_l1
-			if self.label_on ==True:
-				self._label1.pos = self.label1_pos()					
+#			if self.label_on ==True:
+#				self._label1.pos = self.label1_pos()		
 		elif self.num  == 2:
 
 			self._light1.pos = self.pos_l1
 			self._light2.pos = self.pos_l2
-			if self.label_on ==True:
-				self._label1.pos = self.label1_pos()
-				self._label2.pos = self.label2_pos()
+#			if self.label_on ==True:
+#				self._label1.pos = self.label1_pos()
+#				self._label2.pos = self.label2_pos()
 		elif self.num  == 3:
 		
 			self._light1.pos = self.pos_l1
 			self._light2.pos = self.pos_l2
 			self._light3.pos = self.pos_l3
-			if self.label_on ==True:
-				self._label1.pos = self.label1_pos()
-				self._label2.pos = self.label2_pos()
-				self._label3.pos = self.label3_pos()
-		else:
-			print 'the number of lights is not valid.'
-			sys.exit()
+#			if self.label_on ==True:
+#				self._label1.pos = self.label1_pos()
+#				self._label2.pos = self.label2_pos()
+#				self._label3.pos = self.label3_pos()
+
 	
-#self.get_color()
-		
+	def label1_pos(self):
+
+		if self.orientation =='horizontal':
+			pos = [self.pos_l1[0],self.pos_l1[1]-50]
+		else:
+			pos = [self.pos_l1[0]+50,self.pos_l1[1]]
+		return pos
+
+	def label2_pos(self):
+		if self.orientation =='horizontal':
+			pos = [self.pos_l2[0],self.pos_l2[1]-50]
+		else:
+			pos = [self.pos_l2[0]+50,self.pos_l2[1]]
+		return pos
+
+	def label3_pos(self):
+		if self.orientation =='horizontal':
+			pos = [self.pos_l3[0],self.pos_l3[1]-50]
+		else:
+			pos = [self.pos_l3[0]+50,self.pos_l3[1]]
+		return pos
+#self.get_color()		 	
 	def get_color_l1(self):
 		color_rgba=self.off_color
 		if self.bol1 == True:
@@ -385,27 +342,6 @@ BoxLayout:
 		
 		return color_rgba
 
-	def label1_pos(self):
-
-		if self.orientation =='horizontal':
-			pos = [self.pos_l1[0]-25,self.pos_l1[1]-60]
-		else:
-			pos = [self.pos_l1[0]+50,self.pos_l1[1]-30]
-		return pos
-
-	def label2_pos(self):
-		if self.orientation =='horizontal':
-			pos = [self.pos_l2[0]-25,self.pos_l2[1]-60]
-		else:
-			pos = [self.pos_l2[0]+50,self.pos_l2[1]-30]
-		return pos
-
-	def label3_pos(self):
-		if self.orientation =='horizontal':
-			pos = [self.pos_l3[0]-25,self.pos_l3[1]-60]
-		else:
-			pos = [self.pos_l3[0]+50,self.pos_l3[1]- 30]
-		return pos
 ########################################################### Turn on/off ##############################################################
 	def turn_on_off_l1(self):
 		if self.bol1 == False :

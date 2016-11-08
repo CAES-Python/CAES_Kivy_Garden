@@ -1,7 +1,7 @@
 #example
 from kivy.base  import  runTouchApp
 from kivy.lang  import  Builder
-from kivy.garden.light_indicator2 import  Light_indicator2 as Light_indicator
+from kivy.garden.light_indicator2 import  Light_indicator2
 from kivy.uix.button import Button
 
 # LOAD KV UIX

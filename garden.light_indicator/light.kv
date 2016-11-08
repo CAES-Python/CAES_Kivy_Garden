@@ -1,10 +1,9 @@
 #Light indicator kivy file.
 <Light>
-	BoxLayout:
-		canvas:
-			Color:
-				rgba: root.light_color
-			Ellipse:
-				size: root.light_size
-				pos: self.pos
 
+	canvas.after:
+		Color:
+			rgba: root.light_color
+		Ellipse:
+			size: root.light_size
+			pos: self.pos
