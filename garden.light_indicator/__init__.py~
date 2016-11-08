@@ -186,7 +186,7 @@ BoxLayout:
 	l1_label = StringProperty("")
 	l2_label = StringProperty("")
 	l3_label = StringProperty("")
-	text_size = NumericProperty(30)
+	text_size = NumericProperty(20)
 	global _light1 
 	global _light2 
 	global _light3 
@@ -409,41 +409,38 @@ BoxLayout:
 ########################################################### Turn on/off ##############################################################
 	def turn_on_off_l1(self):
 		if self.bol1 == False :
-			self.bol1 = True
+			self.turn_on_l1()#self.bol1 = True
 			
 		else:
-			self.bol1 = False
-		self.get_color_l1() 
+			self.turn_on_l1()#self.bol1 = False
+		
 
 	def turn_on_off_l2(self):
 		if self.bol2 == False :
-			self.bol2 = True
+			self.turn_on_l2()#self.bol2 = True
 			
 		else:
-			self.bol2 = False
-		self.get_color_l2() 
+			self.turn_off_l2()#self.bol2 = False
 
 	def turn_on_off_l3(self):
 		if self.bol3 == False:
-			self.bol3 = True
-			
-		elif self.bol3 == True:
-			self.bol3 = False
-		self.get_color_l3() 
+			self.turn_on_l3()#self.bol3 = True	
+			print "L3 on"	
+		else:
+			self.turn_off_l3()
+			#print "L3 off"
 
 	def turn_on_off_all(self):
-		if self.bol1 == False or self.bol1 == False or self.bol1 == False :
-			self.bol1 = True
-			self.bol2 = True
-			self.bol3 = True
-			
+		if self.bol1 == False or self.bol2 == False or self.bol3 == False :
+			self.turn_on_l1()#self.bol1 = True
+			self.turn_on_l2()#self.bol2 = True
+			self.turn_on_l3()#self.bol3 = True
+			#print "all on"
 		else:
-			self.bol1 = False
-			self.bol2 = False
-			self.bol3 = False
-		self.get_color_l1()
-		self.get_color_l2()
-		self.get_color_l3() 
+			self.turn_off_l1()#self.bol1 = False
+			self.turn_off_l2()#self.bol2 = False
+			self.turn_off_l3()#self.bol3 = False
+			#print "all off"
 ########################################################### Turn on ##############################################################
 	def turn_on_l1(self):
 		if self.bol1 == False :
