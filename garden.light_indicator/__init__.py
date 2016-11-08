@@ -178,13 +178,22 @@ BoxLayout:
 	off_color = StringProperty("grey")# name of the off_color to refrence the dictionary. Defaults to grey.
 	orientation = StringProperty("horizontal") # orientation of the lights. Options are "horizontal" or "vertical".
 	size_lights = ListProperty([50,50]) # size of the lights.
-	setting = BooleanProperty(True) # Boolean for having a setting image or not.
+	setting_on = BooleanProperty(True) # Boolean for having a setting image or not.
 	pos_l1 = ListProperty([100,100])
 	pos_l2 = ListProperty([100,100])
 	pos_l3 = ListProperty([100,100])
+	label_on = BooleanProperty(False)
+	l1_label = StringProperty("")
+	l2_label = StringProperty("")
+	l3_label = StringProperty("")
+	text_size = NumericProperty(20)
 	global _light1 
 	global _light2 
 	global _light3 
+	global _label1 
+	global _label2 
+	global _label3 
+
 	
 
 	def __init__(self, **kwargs):
@@ -202,7 +211,7 @@ BoxLayout:
 			do_scale=True,
 			do_translation=False
 			)
-		if self.setting == True:
+		if self.setting_on == True:
 			if self.orientation == 'horizontal':
 				_img_setting = Image(source=self.file_setting, size=(self.size_setting, 
 					self.size_setting))
@@ -222,6 +231,10 @@ BoxLayout:
 			self._light1.light_size = self.size_lights
 			self._light1.pos = self.pos_l1
 			self._setting.add_widget(self._light1)
+			if self.label_on ==True:
+				self._label1= Label(text=self.l1_label, font_size = self.text_size)
+				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
+				self._setting.add_widget(self._label1)
 			#print 'num = ',self.num
 		elif self.num  == 2:
 			self._light1 = Light()
@@ -232,6 +245,13 @@ BoxLayout:
 			self._light2.pos = self.pos_l2			
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
+			if self.label_on ==True:
+				self._label1= Label( text=self.l1_label, font_size = self.text_size)
+				self._label2= Label( text=self.l2_label, font_size = self.text_size)
+				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
+				self._label2.pos = (self.label2_pos()[0], self.label2_pos()[1])	
+				self._setting.add_widget(self._label1)
+				self._setting.add_widget(self._label2)
 			#print 'num=',self.num
 		elif self.num  == 3:
 			self._light1 = Light()
@@ -246,6 +266,16 @@ BoxLayout:
 			self._setting.add_widget(self._light1)
 			self._setting.add_widget(self._light2)
 			self._setting.add_widget(self._light3)
+			if self.label_on ==True:
+				self._label1= Label( text=self.l1_label, font_size = self.text_size )
+				self._label2= Label( text=self.l2_label, font_size = self.text_size )
+				self._label3= Label( text=self.l3_label, font_size = self.text_size )
+				self._label1.pos = (self.label1_pos()[0], self.label1_pos()[1])
+				self._label2.pos = (self.label2_pos()[0], self.label2_pos()[1])	
+				self._label3.pos = (self.label3_pos()[0], self.label3_pos()[1])	
+				self._setting.add_widget(self._label1)
+				self._setting.add_widget(self._label2)
+				self._setting.add_widget(self._label3)
 			#print 'num =',self.num
 		else:
 
@@ -271,17 +301,24 @@ BoxLayout:
 		if self.num  == 1:
 		
 			self._light1.pos = self.pos_l1
-					
+			if self.label_on ==True:
+				self._label1.pos = self.label1_pos()					
 		elif self.num  == 2:
 
 			self._light1.pos = self.pos_l1
 			self._light2.pos = self.pos_l2
-
+			if self.label_on ==True:
+				self._label1.pos = self.label1_pos()
+				self._label2.pos = self.label2_pos()
 		elif self.num  == 3:
 		
 			self._light1.pos = self.pos_l1
 			self._light2.pos = self.pos_l2
 			self._light3.pos = self.pos_l3
+			if self.label_on ==True:
+				self._label1.pos = self.label1_pos()
+				self._label2.pos = self.label2_pos()
+				self._label3.pos = self.label3_pos()
 		else:
 			print 'the number of lights is not valid.'
 			sys.exit()
@@ -348,6 +385,27 @@ BoxLayout:
 		
 		return color_rgba
 
+	def label1_pos(self):
+
+		if self.orientation =='horizontal':
+			pos = [self.pos_l1[0]-25,self.pos_l1[1]-60]
+		else:
+			pos = [self.pos_l1[0]+50,self.pos_l1[1]-30]
+		return pos
+
+	def label2_pos(self):
+		if self.orientation =='horizontal':
+			pos = [self.pos_l2[0]-25,self.pos_l2[1]-60]
+		else:
+			pos = [self.pos_l2[0]+50,self.pos_l2[1]-30]
+		return pos
+
+	def label3_pos(self):
+		if self.orientation =='horizontal':
+			pos = [self.pos_l3[0]-25,self.pos_l3[1]-60]
+		else:
+			pos = [self.pos_l3[0]+50,self.pos_l3[1]- 30]
+		return pos
 ########################################################### Turn on/off ##############################################################
 	def turn_on_off_l1(self):
 		if self.bol1 == False :

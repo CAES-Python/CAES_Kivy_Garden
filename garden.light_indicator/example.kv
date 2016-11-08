@@ -9,10 +9,15 @@ BoxLayout:
 			bol1: True
 			color2:'yellow'
 			color3:'green'
-			setting: False
+			setting_on: False
 			pos_l1: [25,100]
 			pos_l2: [100,100]
 			pos_l3: [175,100]
+			label_on: True
+			text_size: 15
+			l1_label: "Off"
+			l2_label: "Warming"
+			l3_label: "0n"
 		Light_indicator:
 			id:G
 			num:3
@@ -23,6 +28,11 @@ BoxLayout:
 			pos_l1: [25,100]
 			pos_l2: [100,100]
 			pos_l3: [175,100]
+			label_on: True
+			text_size: 15
+			l1_label: "Off"
+			l2_label: "Warming"
+			l3_label: "0n"
 		Light_indicator:
 			id:B
 			num:3
@@ -40,12 +50,19 @@ BoxLayout:
 			color2:'red'
 			pos_l1: [50,100]
 			pos_l2: [150,100]
+			label_on: True
+			text_size: 20
+			l1_label: "Off"
+			l2_label: "On"
 		Light_indicator:
 			num:1
 			id:Y
 
 			color1: 'green'
 			color2:'yellow'
+			label_on: True
+			text_size: 20
+			l1_label: "On"
 
 
 	BoxLayout:
@@ -59,21 +76,31 @@ BoxLayout:
 			bol1: True
 			color2:'yellow'
 			color3:'green'
-			setting: False
+			setting_on: False
 			pos_l1: [100,175]
 			pos_l2: [100,100]
 			pos_l3: [100,25]
+			label_on: True
+			text_size: 15
+			l1_label: "Off"
+			l2_label: "Warming"
+			l3_label: "0n"
 		Light_indicator:
 			id:Gv
 			orientation: 'vertical'
-			size_lights: [10,10]
+			setting_on: True
+			size_lights: [20,20]
 			num:2
 			color1: 'blue'
 			color2:'green'
 			bol2: True
 			bol1: True
-			pos_l1: [120,200]
-			pos_l2: [120,75]
+			pos_l1: [120,150]
+			pos_l2: [120,50]
+			label_on: True
+			text_size: 30
+			l1_label: "Off"
+			l2_label: "On"
 			
 		Light_indicator:
 			orientation: 'vertical'
