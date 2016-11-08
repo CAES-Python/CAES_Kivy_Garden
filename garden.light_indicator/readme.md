@@ -38,3 +38,4 @@ A simple light indicator. Can use 1,2 or 3 lights.
 			l1_label: "Off"
 			l2_label: "Warming"
 			l3_label: "On"
+Note: The positions of the labels are determined by the positions of the lights.
