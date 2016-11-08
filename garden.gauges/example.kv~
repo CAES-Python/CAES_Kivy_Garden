@@ -1,0 +1,21 @@
+<Main>
+BoxLayout:
+	BoxLayout:
+		orientation: 'vertical'
+		Gauges:
+			gauge_type:'half'
+			
+
+
+	BoxLayout:
+		orientation: 'vertical'	
+		    Knob:
+			id:knob1
+			min:0
+			max:100
+			size: 200, 200
+			value: 0
+			show_marker: True
+			knobimg_source: "img/knob_metal.png"
+			show_marker: False
+
