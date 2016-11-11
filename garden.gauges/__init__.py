@@ -14,7 +14,7 @@ Source svg file provided for customing.
 
 '''
 
-__all__ = ('Gauge',)
+__all__ = ('Gauges',)
 
 __title__ = 'garden.gauges'
 __version__ = '0.1'
@@ -60,12 +60,12 @@ class Gauges(Widget):
 
     def __init__(self, **kwargs):
         super(Gauges, self).__init__(**kwargs)
-        Clock.schedule_once(self._finish_init_,0.5)
+        Clock.schedule_once(self._finish_init_)
 
     def _finish_init_(self,dt):
 
         if self.gauge_type == 'half':
-            self._unit = 1.8
+            self._unit = 1.85
             self.needle_type ='black'
         elif self.gauge_type =='full':
             self._unit = 3.6
@@ -74,7 +74,7 @@ class Gauges(Widget):
             self._unit = 2.71
             self.needle_type ='3/4'
         elif self.gauge_type =='60':
-            self._unit = 1.45
+            self._unit = 1.4
             self.needle_type ='60'
         else:
             print "#" *60
@@ -123,7 +123,7 @@ class Gauges(Widget):
         if self.gauge_type =='half':        
             self._gauge.pos = self.pos
             self._needle.pos = (self.x, self.y)
-            self._needle.center = (self._gauge.center_x, self._gauge.center_y-60)
+            self._needle.center = (self._gauge.center_x, self._gauge.center_y-55)
         elif self.gauge_type =='full':        
             self._gauge.pos = self.pos
             self._needle.pos = (self.x, self.y)
@@ -135,7 +135,7 @@ class Gauges(Widget):
         elif self.gauge_type =='60':        
             self._gauge.pos = self.pos
             self._needle.pos = (self.x, self.y)
-            self._needle.center = (self._gauge.center_x, self._gauge.center_y-60)
+            self._needle.center = (self._gauge.center_x, self._gauge.center_y-55)
 
     def _turn(self, *args):
         '''
@@ -144,7 +144,7 @@ class Gauges(Widget):
         '''
         if self.gauge_type =='half':
             self._needle.center_x = self._gauge.center_x
-            self._needle.center_y = self._gauge.center_y-60
+            self._needle.center_y = self._gauge.center_y-55
             self._needle.rotation = ( self._unit) - (self.value * self._unit)
         elif self.gauge_type =='full':
             self._needle.center_x = self._gauge.center_x
@@ -156,7 +156,7 @@ class Gauges(Widget):
             self._needle.rotation = ( self._unit) - (self.value * self._unit)
         elif self.gauge_type =='60':
             self._needle.center_x = self._gauge.center_x
-            self._needle.center_y = self._gauge.center_y-60
+            self._needle.center_y = self._gauge.center_y-55
             self._needle.rotation = ( self._unit) - (self.value * self._unit)
 
 dirflag = 1
