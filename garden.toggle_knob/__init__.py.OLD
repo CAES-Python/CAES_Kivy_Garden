@@ -1,0 +1,193 @@
+#!/usr/bin/env python
+
+
+'''
+Multi-Light indicator
+=====
+
+The :class:`Light_indicator` widget is a widget for displaying Light_indicator. 
+
+.. note::
+
+
+
+'''
+# This is the dictionary which maps the user color choice to the rgba list property.
+
+__all__ = ('Toggle_knob',)
+
+__title__ = 'garden.toggle_knob'
+__version__ = '0.1'
+__author__ = 'Marcus Holden'
+# shoutout to julien@hautefeuille.eu and the creator of the kivy garden knobs, whose __init__.py code helped me develop this file.
+import kivy
+kivy.require('1.9.1')
+from kivy.config import Config
+from kivy.app import App
+from kivy.clock import Clock
+from kivy.lang  import  Builder
+
+from kivy.properties    import   StringProperty, BooleanProperty, ReferenceListProperty, ListProperty, StringProperty, BoundedNumericProperty, NumericProperty
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.widget import Widget
+from kivy.uix.scatter import Scatter
+from kivy.uix.image import Image
+from kivy.uix.label import Label
+from kivy.graphics.vertex_instructions import Ellipse, Rectangle
+from kivy.graphics.context_instructions import Color
+from functools import partial
+import os,inspect,sys
+
+
+class Toggle_Knob(Widget):
+	'''
+	Light_indicator class
+	A basic Kivy example:
+<Main>
+BoxLayout:
+	BoxLayout:
+		
+	'''
+	dummy = DummyClass
+	mypath = os.path.dirname(os.path.abspath(inspect.getsourcefile(dummy)))
+	file_knob = StringProperty(mypath + os.sep + "toggle_knob.png")
+	
+	size_knob = BoundedNumericProperty(256, min=128, max=256, errorvalue=128)
+	
+	
+      
+	
+	
+
+	def __init__(self, **kwargs):
+		super(Toggle_knob, self).__init__(**kwargs)
+
+		Clock.schedule_once(self._finish_init_, 0.5)
+		#Clock.schedule_once(self._finish_init_, 0.5)
+		Clock.schedule_interval(self.my_schedule, 0.1)
+		
+
+	def _finish_init_(self,dt):
+		self._Tknob = Scatter(
+			size=(self.size_knob, self.size_knob),
+			do_rotate=False, 
+			do_scale=False,
+			do_translation=False
+			)
+
+		_img_setting = Image(source=self.file_setting, size=(self.size_knob, 
+			self.size_knob))
+		self._setting.add_widget(_img_setting)
+			
+		
+
+		#self.add_widget(self._setting)
+		#self._setting.pos = self.pos
+		self.bind(pos=self._update)
+		self.bind(size=self._update)
+		self.add_widget(self._setting)
+	   if self.gauge_type == 'half':
+            self._unit = 1.85
+            self.needle_type ='black'
+        elif self.gauge_type =='full':
+            self._unit = 3.6
+            self.needle_type ='black'
+        elif self.gauge_type =='3/4':
+            self._unit = 2.71
+            self.needle_type ='3/4'
+        elif self.gauge_type =='60':
+            self._unit = 1.4
+            self.needle_type ='60'
+        else:
+            print "#" *60
+            print "#" *60
+            print "ERROR: Gauge type incorrect! Add the image to the dictionary found in the __init__.py file."
+            print "#" *60
+            print "#" *60
+            sys.exit()
+        self._gauge = Scatter(
+            size=(self.size_gauge, self.size_gauge),
+            do_rotate=False, 
+            do_scale=False,
+            do_translation=False
+            )
+
+        _img_gauge = Image(source=self.mypath + os.sep + self.gauge_dict[self.gauge_type], size=(self.size_gauge, 
+            self.size_gauge))
+
+        self._needle = Scatter(
+            size=(self.size_gauge, self.size_gauge),
+            do_rotate=False,
+            do_scale=False,
+            do_translation=False
+            )
+
+        _img_needle = Image(source=self.mypath + os.sep + self.needle_dict[self.needle_type], size=(self.size_gauge, 
+            self.size_gauge))
+
+       
+        self._gauge.add_widget(_img_gauge)
+        self._needle.add_widget(_img_needle)
+        
+        self.add_widget(self._gauge)
+        self.add_widget(self._needle)
+
+
+        self.bind(pos=self._update)
+        self.bind(size=self._update)
+        self.bind(value=self._turn)
+       
+	def on_touch_down(self, touch):
+		if self.collide_point(*touch.pos):
+			self.update_angle(touch)
+
+
+	def on_touch_move(self, touch):
+		if self.collide_point(*touch.pos):
+			self.update_angle(touch)
+
+ 
+	def _update(self, *args):
+		'''
+		Update gauge and needle positions after sizing or positioning.
+
+		'''
+		if self.gauge_type =='half':        
+		    self._gauge.pos = self.pos
+		    self._needle.pos = (self.x, self.y)
+		    self._needle.center = (self._gauge.center_x, self._gauge.center_y-60)
+		elif self.gauge_type =='full':        
+		    self._gauge.pos = self.pos
+		    self._needle.pos = (self.x, self.y)
+		    self._needle.center = (self._gauge.center_x, self._gauge.center_y)
+		elif self.gauge_type =='3/4':        
+		    self._gauge.pos = self.pos
+		    self._needle.pos = (self.x, self.y)
+		    self._needle.center = (self._gauge.center_x, self._gauge.center_y)
+		elif self.gauge_type =='60':        
+		    self._gauge.pos = self.pos
+		    self._needle.pos = (self.x, self.y)
+		    self._needle.center = (self._gauge.center_x, self._gauge.center_y-60)
+
+	def _turn(self, *args):
+		'''
+		Turn needle, 1 degree = 1 unit, 0 degree point start on 0 value.
+
+		'''
+		if self.gauge_type =='half':
+		    self._needle.center_x = self._gauge.center_x
+		    self._needle.center_y = self._gauge.center_y-60
+		    self._needle.rotation = ( self._unit) - (self.value * self._unit)
+		elif self.gauge_type =='full':
+		    self._needle.center_x = self._gauge.center_x
+		    self._needle.center_y = self._gauge.center_y
+		    self._needle.rotation = ( self._unit) - (self.value * self._unit)
+		elif self.gauge_type =='3/4':
+		    self._needle.center_x = self._gauge.center_x
+		    self._needle.center_y = self._gauge.center_y
+		    self._needle.rotation = ( self._unit) - (self.value * self._unit)
+		elif self.gauge_type =='60':
+		    self._needle.center_x = self._gauge.center_x
+		    self._needle.center_y = self._gauge.center_y-60
+		    self._needle.rotation = ( self._unit) - (self.value * self._unit)
+
