@@ -35,7 +35,7 @@ from kivy.uix.scatter import Scatter
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 
-import os,inspect
+import os,inspect, sys
 
 class DummyClass: pass
 
@@ -65,7 +65,7 @@ class Gauges(Widget):
     def _finish_init_(self,dt):
 
         if self.gauge_type == 'half':
-            self._unit = 1.8
+            self._unit = 1.85
             self.needle_type ='black'
         elif self.gauge_type =='full':
             self._unit = 3.6
@@ -74,7 +74,7 @@ class Gauges(Widget):
             self._unit = 2.71
             self.needle_type ='3/4'
         elif self.gauge_type =='60':
-            self._unit = 1.45
+            self._unit = 1.4
             self.needle_type ='60'
         else:
             print "#" *60
@@ -85,7 +85,7 @@ class Gauges(Widget):
             sys.exit()
         self._gauge = Scatter(
             size=(self.size_gauge, self.size_gauge),
-            do_rotate=False, 
+            do_rotation=False, 
             do_scale=False,
             do_translation=False
             )
