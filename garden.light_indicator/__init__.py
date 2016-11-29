@@ -35,6 +35,7 @@ from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.graphics.vertex_instructions import Ellipse, Rectangle
 from kivy.graphics.context_instructions import Color
+from kivy.uix.floatlayout import FloatLayout
 from functools import partial
 import os,inspect,sys
 
@@ -208,8 +209,9 @@ BoxLayout:
 	def _finish_init_(self,dt):
 		self._setting = Scatter(
 			size=(self.size_setting, self.size_setting),
-			do_rotate=False, 
-			do_scale=True,
+			pos=self.pos,
+			do_rotation=False, 
+			do_scale=False,
 			do_translation=False
 			)
 		if self.setting_on == True:
