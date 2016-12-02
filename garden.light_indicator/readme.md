@@ -11,6 +11,7 @@ A simple light indicator. Can use 1,2 or 3 lights.
 			color2:'yellow'#Color of light 2.default to yellow
 			color3:'green' #Color of light 3.default to yellow
 			setting_on: False # Background setting off default to True
+			Label_on: True #turn on the Labels. Defaults to False.
 			pos_l1: [25,100] # positions of Light 1 in (x , y). defualt to (100,100)
 			pos_l2: [100,100]
 			pos_l3: [175,100]
