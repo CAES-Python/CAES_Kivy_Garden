@@ -423,7 +423,7 @@ BoxLayout:
 			self.turn_on_l1()#self.bol1 = True
 			
 		else:
-			self.turn_on_l1()#self.bol1 = False
+			self.turn_off_l1()#self.bol1 = False
 		
 
 	def turn_on_off_l2(self):

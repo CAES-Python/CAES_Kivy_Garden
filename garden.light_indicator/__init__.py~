@@ -210,7 +210,7 @@ BoxLayout:
 		self._setting = Scatter(
 			size=(self.size_setting, self.size_setting),
 			pos=self.pos,
-			do_rotate=False, 
+			do_rotation=False, 
 			do_scale=False,
 			do_translation=False
 			)
@@ -418,7 +418,7 @@ BoxLayout:
 			pos = [self.pos_l3[0]+50,self.pos_l3[1]- 30]
 		return pos
 ########################################################### Turn on/off ##############################################################
-	def turn_on_off_l1(self):
+	def turn_on_off_l1(self,dt):
 		if self.bol1 == False :
 			self.turn_on_l1()#self.bol1 = True
 			
@@ -426,14 +426,14 @@ BoxLayout:
 			self.turn_on_l1()#self.bol1 = False
 		
 
-	def turn_on_off_l2(self):
+	def turn_on_off_l2(self,dt):
 		if self.bol2 == False :
 			self.turn_on_l2()#self.bol2 = True
 			
 		else:
 			self.turn_off_l2()#self.bol2 = False
 
-	def turn_on_off_l3(self):
+	def turn_on_off_l3(self,dt):
 		if self.bol3 == False:
 			self.turn_on_l3()#self.bol3 = True	
 			#print "L3 on"	
@@ -441,7 +441,7 @@ BoxLayout:
 			self.turn_off_l3()
 			#print "L3 off"
 
-	def turn_on_off_all(self):
+	def turn_on_off_all(self,dt):
 		if self.bol1 == False or self.bol2 == False or self.bol3 == False :
 			self.turn_on_l1()#self.bol1 = True
 			self.turn_on_l2()#self.bol2 = True
