@@ -1,3 +1,4 @@
+***Slightly modified from the kivy garden Roulette module***
 Roulette
 ========
 
