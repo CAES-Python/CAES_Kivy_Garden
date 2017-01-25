@@ -1,3 +1,4 @@
+***Modified from the kivy garden tickline module**** (no touch capabilities)
 Tickline
 ========
 
