@@ -1,0 +1,29 @@
+<My_Layout>:
+	Light_gauge:
+		id:lg
+		value:knob1.value
+	Label:
+		text:''
+	BoxLayout:
+		orientation:'vertical'
+		Label:
+			text:''
+		Knob:
+			id: knob1
+			size:150,150
+			value: 0
+			min: 0
+			max: 100
+			step: 1
+			knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
+			knobimg_size: 1
+			show_label: False
+			show_marker: False
+		Label:
+			text:''
+	BoxLayout:
+		orientation:'vertical'
+		Label:
+			text:'gauge value: '+ str(lg.value)
+		Label:
+			text:'knob value: '+ str(knob1.value)

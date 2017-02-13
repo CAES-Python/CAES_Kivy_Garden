@@ -1,0 +1,9 @@
+#Light indicator kivy file.
+<Light>
+
+	canvas.after:
+		Color:
+			rgba: root.light_color
+		Rectangle:
+			size: root.light_size
+			pos: self.pos
