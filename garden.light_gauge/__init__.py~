@@ -12,46 +12,28 @@ Additionally, knobimg_source could be set to load
 a texture that visually represents the knob.
 
 """
-__all__     = ('Knob',)
-__version__ = '0.2'
+__all__     = ('Light_gauge',)
+__version__ = '0.1'
 
 import math
 
 from kivy.lang          import  Builder
 from kivy.uix.widget    import  Widget
-from kivy.properties    import  NumericProperty, ObjectProperty, StringProperty,\
-	                BooleanProperty, ReferenceListProperty, BoundedNumericProperty,\
+from kivy.properties    import  NumericProperty,  StringProperty,\
+	                 ReferenceListProperty, BoundedNumericProperty,\
 	                ListProperty
-from kivy.graphics.vertex_instructions import Ellipse 
-from kivy.uix.image import Image
-
-Builder.load_string('''
-
-<Light_gauge>
-	size_hint: None, None
-
-	canvas.before:
+from kivy.graphics import Rectangle, Color
 
 
-	Color:
-		rgba: self.color
-	Rectangle:
-		pos: self.pos[0], self.pos[1] #pos: self.pos
-		size: self.size[0], self.size[1]
-		do_scale: True
-
-
-''')
 
 class Light_gauge(Widget):
 
 	min = NumericProperty(0)
 	max = NumericProperty(100)
-
 	range = ReferenceListProperty(min, max)
 	value = NumericProperty(0)
 	color = ListProperty([0, 1, 0, 1])
-	gauge_size = ListProperty([0, 50])
+	gauge_size = ListProperty([100, 900])
 	orientation = StringProperty("vertical")
 
 
@@ -60,13 +42,18 @@ class Light_gauge(Widget):
 		
 		self.bind(pos           =   self._update)
 		self.bind(size           =   self._update)
-
+		
+		
 
 	def _update(self, *args):
-		self.pos =(self.pos[0], self.pos[1])
+		
+		self.pos =self.pos
 		if self.orientation =='vertical':
-			self.size = (self.size[0], self.size[1]+self.value)
+			self.gauge_size[1] = self.value
 		else:
-			self.size = (self.size[0]+self.value, self.size[1])
-
+			self.gauge_size[0] = self.value
+	def draw_rect(self,dt):
+				with self.canvas:
+			Color(rgba=self.color)
+			self.rect=Rectangle(pos = self.pos, size=self.gauge_size)
 
