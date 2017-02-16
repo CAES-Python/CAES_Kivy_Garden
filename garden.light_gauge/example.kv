@@ -2,6 +2,10 @@
 	Light_gauge:
 		id:lg
 		value:knob1.value
+	Light_gauge:
+		id:lg2
+		value:knob1.value/2
+		color:1,0,0,1
 	Label:
 		text:''
 	BoxLayout:
@@ -13,7 +17,7 @@
 			size:150,150
 			value: 0
 			min: 0
-			max: 100
+			max: 150
 			step: 1
 			knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
 			knobimg_size: 1
@@ -24,6 +28,8 @@
 	BoxLayout:
 		orientation:'vertical'
 		Label:
-			text:'gauge value: '+ str(lg.value)
+			text:'gauge1 value: '+ str(lg.value)
+		Label:
+			text:'gauge2 value: '+ str(lg2.value)
 		Label:
 			text:'knob value: '+ str(knob1.value)

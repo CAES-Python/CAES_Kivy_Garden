@@ -23,7 +23,7 @@ from kivy.properties    import  NumericProperty,  StringProperty,\
 	                 ReferenceListProperty, BoundedNumericProperty,\
 	                ListProperty
 from kivy.graphics import Rectangle, Color
-
+from kivy.clock import Clock
 
 
 class Light_gauge(Widget):
@@ -33,13 +33,16 @@ class Light_gauge(Widget):
 	range = ReferenceListProperty(min, max)
 	value = NumericProperty(0)
 	color = ListProperty([0, 1, 0, 1])
-	gauge_size = ListProperty([100, 900])
+	gauge_size = ListProperty([100, 20])
 	orientation = StringProperty("vertical")
-
-
+	_old_value = -1
+	_new_value = value
 	def __init__(self, *args, **kwargs):
 		super(Light_gauge, self).__init__(*args, **kwargs)
-		
+		with self.canvas:
+			Color(rgba=self.color)
+			self.rect=Rectangle(pos = self.pos, size=self.gauge_size)
+		Clock.schedule_interval(self.update_rect, 0.1)
 		self.bind(pos           =   self._update)
 		self.bind(size           =   self._update)
 		
@@ -49,11 +52,18 @@ class Light_gauge(Widget):
 		
 		self.pos =self.pos
 		if self.orientation =='vertical':
-			self.gauge_size[1] = self.value
+			self.gauge_size[1] = self.value*8
 		else:
-			self.gauge_size[0] = self.value
-	def draw_rect(self,dt):
-				with self.canvas:
-			Color(rgba=self.color)
-			self.rect=Rectangle(pos = self.pos, size=self.gauge_size)
+			self.gauge_size[0] = self.value*8
 
+
+	def update_rect(self,dt):
+		if self._new_value != self._old_value:
+			self.canvas.clear()
+			self._update()
+			with self.canvas:
+				Color(rgba=self.color)
+				self.rect=Rectangle(pos = self.pos, size=self.gauge_size)
+			self._old_value = self._new_value 
+		else:
+			pass
